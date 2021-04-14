@@ -1,0 +1,50 @@
+include ':app'
+include ':router-gradle-plugin'
+include ':router-annotations'
+include ':router-processor'
+rootProject.name = "JAppBuild"
+
+// 打印本次构建执行的所有任务的名称
+//[all-task] preBuild
+//[all-task] preDebugBuild
+//[all-task] compileDebugAidl
+//[all-task] compileDebugRenderscript
+//[all-task] generateDebugBuildConfig
+//[all-task] checkDebugAarMetadata
+//[all-task] generateDebugResValues
+//[all-task] generateDebugResources
+//[all-task] mergeDebugResources
+//[all-task] createDebugCompatibleScreenManifests
+//[all-task] extractDeepLinksDebug
+//[all-task] processDebugMainManifest
+//[all-task] processDebugManifest
+//[all-task] processDebugManifestForPackage
+//[all-task] processDebugResources
+//[all-task] kaptGenerateStubsDebugKotlin
+//[all-task] kaptDebugKotlin
+//[all-task] compileDebugKotlin
+//[all-task] javaPreCompileDebug
+//[all-task] compileDebugJavaWithJavac
+//[all-task] compileDebugSources
+//[all-task] mergeDebugNativeDebugMetadata
+//[all-task] mergeDebugShaders
+//[all-task] compileDebugShaders
+//[all-task] generateDebugAssets
+//[all-task] mergeDebugAssets
+//[all-task] compressDebugAssets
+//[all-task] processDebugJavaRes
+//[all-task] mergeDebugJavaResource
+//[all-task] checkDebugDuplicateClasses
+//[all-task] dexBuilderDebug
+//[all-task] desugarDebugFileDependencies
+//[all-task] mergeExtDexDebug
+//[all-task] mergeDexDebug
+//[all-task] mergeDebugJniLibFolders
+//[all-task] mergeDebugNativeLibs
+//[all-task] stripDebugDebugSymbols
+//[all-task] validateSigningDebug
+//[all-task] packageDebug
+//[all-task] assembleDebug
+gradle.taskGraph.beforeTask {task->
+    println("[all-task] " + task.name)
+}

@@ -1,0 +1,12 @@
+// 引入java插件
+apply plugin: 'java'
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation project(":router-annotations")
+    // 使用auto-service会将我们的注解处理器自动注册到编译器
+    implementation 'com.google.auto.service:auto-service:1.0-rc6'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
+}
+
+apply from: rootProject.file("maven-publish.gradle")

@@ -1,0 +1,36 @@
+// 引入groovy插件，编译插件工程中的代码
+apply plugin: 'groovy'
+
+// 声明将会使用到的第三方包所属的仓库，这样gradle才会知道去哪里下载第三方包
+repositories {
+//    google()
+    jcenter()
+}
+
+// 指定需要用到哪些第三方包来辅助插件开发
+dependencies {
+    // 插件是基于gradle的，所以需要用到gradle这个包
+    implementation gradleApi()
+    // groovy的基础功能
+    implementation localGroovy()
+}
+
+// 1. 调用maven插件，用于发布
+apply plugin: 'maven'
+
+// 2. 配置来自maven插件上的task
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            // 设置发布路径为工程根目录下面的repo文件夹
+            repository(url: uri('../repo')) {
+                // 设置groupId,通常为包名
+                pom.groupId = 'com.jeremy.router'
+                // 设置artifactId，为当前插件的名称
+                pom.artifactId = 'router-gradle-plugin'
+                // 设置插件的版本号
+                pom.version = '1.0.0'
+            }
+        }
+    }
+}

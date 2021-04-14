@@ -1,0 +1,42 @@
+// 使用maven插件中的发布功能
+apply plugin: 'maven'
+
+// 读取工程配置
+Properties gradleProperties = new Properties()
+gradleProperties.load(project.rootProject.file("gradle.properties").newDataInputStream())
+
+def POM_URL = gradleProperties.getProperty("POM_URL")
+def GROUP_ID = gradleProperties.getProperty("GROUP_ID")
+def VERSION_NAME = gradleProperties.getProperty("VERSION_NAME")
+
+Properties moduleProperties = new Properties();
+moduleProperties.load(project.file("gradle.properties").newDataInputStream())
+def POM_ARTIFACT_ID = moduleProperties.getProperty("POM_ARTIFACT_ID")
+
+println("POM_URL: " + POM_URL + "  " + "GROUP_ID: " + GROUP_ID + "  " + "POM_ARTIFACT_ID: " + POM_ARTIFACT_ID + "VERSION_NAME: " + VERSION_NAME)
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            // 设置发布路径为工程根目录下面的repo文件夹
+            repository(url: uri('../repo')) {
+                // 设置groupId,通常为包名
+                pom.groupId = GROUP_ID
+                // 设置artifactId，为当前插件的名称
+                pom.artifactId = POM_ARTIFACT_ID
+                // 设置插件的版本号
+                pom.version = VERSION_NAME
+            }
+
+            pom.whenConfigured { pom ->
+                pom.dependencies.forEach {dep->
+                    if (dep.getVersion() == "unspecified") {
+                        dep.setGroupId(GROUP_ID)
+                        dep.setVersion(VERSION_NAME)
+                    }
+                }
+            }
+        }
+    }
+}
+
